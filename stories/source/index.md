@@ -3,4 +3,4 @@ title: Daily Stories
 layout: page
 ---
 
-- 2026-07-27 — [The Orchard of Second Moons](texts/2026-07-27-en.txt)
+- 2026-07-27 — [The Almond Hour](texts/2026-07-27-en.txt)
