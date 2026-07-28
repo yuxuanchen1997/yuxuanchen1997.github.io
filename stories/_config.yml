@@ -6,7 +6,7 @@ language: en
 timezone: America/Los_Angeles
 url: https://yuxuan.ch
 root: /stories/
-permalink: :year/:month/:day/:title/
+permalink: :year/:month/:day/
 source_dir: source
 public_dir: public
 theme: stories

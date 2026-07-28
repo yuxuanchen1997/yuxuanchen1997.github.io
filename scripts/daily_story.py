@@ -24,12 +24,12 @@ import tempfile
 ROOT = Path(__file__).resolve().parent.parent
 DICTIONARY_PATH = Path(__file__).resolve().with_name("story_words.txt")
 HEXO_DIR = ROOT / "stories"
-ENGLISH_DIR = HEXO_DIR / "source" / "texts"
+ENGLISH_DIR = HEXO_DIR / "source" / "_posts"
 CHINESE_HEXO_DIR = ROOT / "stories_ch"
-CHINESE_DIR = CHINESE_HEXO_DIR / "source" / "texts"
+CHINESE_DIR = CHINESE_HEXO_DIR / "source" / "_posts"
 ENGLISH_INDEX = HEXO_DIR / "source" / "index.md"
 CHINESE_INDEX = CHINESE_HEXO_DIR / "source" / "index.md"
-ENGLISH_FILE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-en\.txt$")
+POST_FILE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})\.md$")
 WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 MIN_WORDS = 300
 MAX_WORDS = 400
@@ -220,6 +220,44 @@ def atomic_write(path: Path, content: str) -> None:
         raise
 
 
+def markdown_post(title: str, story: str, date: str, language: str) -> str:
+    return f"""---
+title: {json.dumps(title, ensure_ascii=False)}
+date: {date} 00:00:00
+lang: {language}
+layout: post
+---
+
+{story.strip()}
+"""
+
+
+def migrate_legacy_stories() -> None:
+    """Convert the former paired text files into proper Hexo posts once."""
+    legacy_english_dir = HEXO_DIR / "source" / "texts"
+    legacy_chinese_dir = CHINESE_HEXO_DIR / "source" / "texts"
+    for english_text in legacy_english_dir.glob("*-en.txt"):
+        match = re.fullmatch(r"(\d{4}-\d{2}-\d{2})-en\.txt", english_text.name)
+        if not match:
+            continue
+        date = match.group(1)
+        chinese_text = legacy_chinese_dir / f"{date}-zh.txt"
+        if not chinese_text.is_file():
+            continue
+        english_title, _, english_story = english_text.read_text(encoding="utf-8").partition("\n\n")
+        chinese_title, _, chinese_story = chinese_text.read_text(encoding="utf-8").partition("\n\n")
+        atomic_write(
+            ENGLISH_DIR / f"{date}.md",
+            markdown_post(english_title.strip(), english_story, date, "en"),
+        )
+        atomic_write(
+            CHINESE_DIR / f"{date}.md",
+            markdown_post(chinese_title.strip(), chinese_story, date, "zh-CN"),
+        )
+        english_text.unlink()
+        chinese_text.unlink()
+
+
 def run_checked(command: list[str], cwd: Path) -> None:
     result = subprocess.run(
         command,
@@ -248,21 +286,29 @@ def build_site(site_dir: Path) -> None:
     public_dir = site_dir / "public"
     if not (public_dir / "index.html").is_file():
         raise RuntimeError(f"Hexo did not create {public_dir / 'index.html'}")
+    legacy_output = site_dir / "texts"
+    if legacy_output.is_dir():
+        shutil.rmtree(legacy_output)
     shutil.copytree(public_dir, site_dir, dirs_exist_ok=True)
 
 
 def commit_and_push(publication_date: str) -> None:
     paths = [
         "stories/source/index.md",
+        "stories/source/_posts",
         "stories/source/texts",
         "stories/index.html",
         "stories/texts",
+        "stories/20*",
         "stories_ch/source/index.md",
+        "stories_ch/source/_posts",
         "stories_ch/source/texts",
         "stories_ch/index.html",
         "stories_ch/texts",
+        "stories_ch/20*",
     ]
-    run_checked(["git", "add", "--", *paths], ROOT)
+    # Glob patterns are passed to Git as pathspecs, not expanded by the shell.
+    run_checked(["git", "add", "-A", "--", *paths], ROOT)
     staged = subprocess.run(
         ["git", "diff", "--cached", "--quiet"], cwd=ROOT, check=False
     )
@@ -278,18 +324,24 @@ def commit_and_push(publication_date: str) -> None:
 
 
 def read_title(path: Path) -> str:
-    with path.open(encoding="utf-8") as story_file:
-        return story_file.readline().strip() or path.stem
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("title:"):
+            value = line.removeprefix("title:").strip()
+            try:
+                return json.loads(value)
+            except json.JSONDecodeError:
+                return value.strip("'\"")
+    return path.stem
 
 
 def story_entries() -> list[tuple[str, str, str]]:
     entries: list[tuple[str, str, str]] = []
-    for english_path in ENGLISH_DIR.glob("*-en.txt"):
-        match = ENGLISH_FILE_RE.fullmatch(english_path.name)
+    for english_path in ENGLISH_DIR.glob("*.md"):
+        match = POST_FILE_RE.fullmatch(english_path.name)
         if not match:
             continue
         date = match.group(1)
-        chinese_path = CHINESE_DIR / f"{date}-zh.txt"
+        chinese_path = CHINESE_DIR / f"{date}.md"
         if chinese_path.is_file():
             entries.append((date, read_title(english_path), read_title(chinese_path)))
     entries.sort(reverse=True)
@@ -301,14 +353,14 @@ def build_index(language: str) -> str:
     if language == "en":
         title = "Daily Stories"
         rows = "\n".join(
-            f"- {date} — [{english_title}](texts/{date}-en.txt)"
+            f"- {date} — [{english_title}]({date.replace('-', '/')}/)"
             for date, english_title, _ in entries
         )
         empty = "No stories have been published yet."
     else:
         title = "每日故事"
         rows = "\n".join(
-            f"- {date} — [{chinese_title}](texts/{date}-zh.txt)"
+            f"- {date} — [{chinese_title}]({date.replace('-', '/')}/)"
             for date, _, chinese_title in entries
         )
         empty = "暂无故事"
@@ -342,8 +394,9 @@ def main() -> int:
 
     args = parse_args()
     date = args.date.isoformat()
-    english_path = ENGLISH_DIR / f"{date}-en.txt"
-    chinese_path = CHINESE_DIR / f"{date}-zh.txt"
+    migrate_legacy_stories()
+    english_path = ENGLISH_DIR / f"{date}.md"
+    chinese_path = CHINESE_DIR / f"{date}.md"
 
     if not args.force and english_path.exists() and chinese_path.exists():
         print(f"Using the existing story for {date} and resuming publication.")
@@ -354,10 +407,12 @@ def main() -> int:
     else:
         story = generate_story(args.model)
         atomic_write(
-            english_path, f"{story['english_title']}\n\n{story['english_story']}\n"
+            english_path,
+            markdown_post(story["english_title"], story["english_story"], date, "en"),
         )
         atomic_write(
-            chinese_path, f"{story['chinese_title']}\n\n{story['chinese_story']}\n"
+            chinese_path,
+            markdown_post(story["chinese_title"], story["chinese_story"], date, "zh-CN"),
         )
     atomic_write(ENGLISH_INDEX, build_index("en"))
     atomic_write(CHINESE_INDEX, build_index("zh"))
