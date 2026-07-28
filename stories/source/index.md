@@ -3,4 +3,4 @@ title: Daily Stories
 layout: page
 ---
 
-No stories have been published yet.
+- 2026-07-27 — [The Orchard of Second Moons](texts/2026-07-27-en.txt)
