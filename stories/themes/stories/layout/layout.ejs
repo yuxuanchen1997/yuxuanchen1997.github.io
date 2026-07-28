@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="<%= config.language[0] || 'en' %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page.title ? page.title + ' — ' : '' %><%= config.title %></title>
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/skeleton.css">
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+  <main class="container">
+    <nav class="mt-2"><a href="/">Home</a></nav>
+    <hr>
+    <%- body %>
+  </main>
+</body>
+</html>
