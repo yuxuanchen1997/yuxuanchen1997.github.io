@@ -296,15 +296,11 @@ def commit_and_push(publication_date: str) -> None:
     paths = [
         "stories/source/index.md",
         "stories/source/_posts",
-        "stories/source/texts",
         "stories/index.html",
-        "stories/texts",
         "stories/20*",
         "stories_ch/source/index.md",
         "stories_ch/source/_posts",
-        "stories_ch/source/texts",
         "stories_ch/index.html",
-        "stories_ch/texts",
         "stories_ch/20*",
     ]
     # Glob patterns are passed to Git as pathspecs, not expanded by the shell.
