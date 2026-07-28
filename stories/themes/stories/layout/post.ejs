@@ -2,4 +2,9 @@
   <h2><%= page.title %></h2>
   <%- page.content %>
   <p class="lit">— <%= date(page.date, 'MMM D, YYYY') %></p>
+  <p>
+    <a class="button" href="<%= config.root %>">
+      <%= config.language === 'zh-CN' ? '返回故事目录' : 'Back to Stories' %>
+    </a>
+  </p>
 </article>

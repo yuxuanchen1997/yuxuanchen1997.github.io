@@ -1,4 +1,8 @@
 <article>
+  <nav class="text-right" aria-label="Story language">
+    <a class="button<%= config.language === 'en' ? ' button-primary' : '' %>" href="/stories/"<%- config.language === 'en' ? ' aria-current="page"' : '' %>>EN</a>
+    <a class="button<%= config.language === 'zh-CN' ? ' button-primary' : '' %>" href="/stories_ch/"<%- config.language === 'zh-CN' ? ' aria-current="page"' : '' %>>中</a>
+  </nav>
   <h2><%= page.title %></h2>
   <%- page.content %>
 </article>
