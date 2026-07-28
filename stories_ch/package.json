@@ -2,6 +2,9 @@
   "name": "daily-stories-chinese",
   "version": "1.0.0",
   "private": true,
+  "hexo": {
+    "version": "8.1.2"
+  },
   "scripts": {
     "build": "hexo clean && hexo generate"
   },

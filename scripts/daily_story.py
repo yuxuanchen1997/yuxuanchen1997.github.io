@@ -290,17 +290,20 @@ def main() -> int:
     english_path = ENGLISH_DIR / f"{date}-en.txt"
     chinese_path = CHINESE_DIR / f"{date}-zh.txt"
 
-    if not args.force and (english_path.exists() or chinese_path.exists()):
-        print(f"A story for {date} already exists; use --force to replace it.", file=sys.stderr)
-        return 2
-
-    story = generate_story(args.date, args.model)
-    atomic_write(
-        english_path, f"{story['english_title']}\n\n{story['english_story']}\n"
-    )
-    atomic_write(
-        chinese_path, f"{story['chinese_title']}\n\n{story['chinese_story']}\n"
-    )
+    if not args.force and english_path.exists() and chinese_path.exists():
+        print(f"Using the existing story for {date} and resuming publication.")
+    elif not args.force and (english_path.exists() or chinese_path.exists()):
+        raise RuntimeError(
+            f"only one language exists for {date}; use --force to replace the pair"
+        )
+    else:
+        story = generate_story(args.date, args.model)
+        atomic_write(
+            english_path, f"{story['english_title']}\n\n{story['english_story']}\n"
+        )
+        atomic_write(
+            chinese_path, f"{story['chinese_title']}\n\n{story['chinese_story']}\n"
+        )
     atomic_write(ENGLISH_INDEX, build_index("en"))
     atomic_write(CHINESE_INDEX, build_index("zh"))
     build_site(HEXO_DIR)
