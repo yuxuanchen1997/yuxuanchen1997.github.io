@@ -14,6 +14,7 @@ import json
 import os
 from pathlib import Path
 import re
+import secrets
 import shutil
 import subprocess
 import sys
@@ -21,6 +22,7 @@ import tempfile
 
 
 ROOT = Path(__file__).resolve().parent.parent
+DICTIONARY_PATH = Path(__file__).resolve().with_name("story_words.txt")
 HEXO_DIR = ROOT / "stories"
 ENGLISH_DIR = HEXO_DIR / "source" / "texts"
 CHINESE_HEXO_DIR = ROOT / "stories_ch"
@@ -31,6 +33,19 @@ ENGLISH_FILE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-en\.txt$")
 WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 MIN_WORDS = 300
 MAX_WORDS = 400
+MIN_DICTIONARY_WORDS = 1000
+DISALLOWED_SEED_WORDS = {
+    "alcohol", "battle", "beer", "blood", "body", "bomb", "cemetery",
+    "church", "coffin", "crime", "dagger", "dead", "death", "disease",
+    "drug", "dying", "ethnic", "female", "flesh", "funeral", "ghost",
+    "grave", "gun", "hate", "husband", "knife", "lover", "lunar", "male",
+    "moon", "mosque", "mourning", "naked", "nazi", "nude", "penis",
+    "pistol", "politics", "porn", "prison", "race", "racial", "racism",
+    "racist", "rape", "religion", "rifle", "romance", "sex", "sexism",
+    "sexist", "sexual", "sexy", "slur", "sword", "temple", "tobacco",
+    "vagina", "violence", "vodka", "war", "weapon", "whiskey", "wife",
+    "wine",
+}
 
 OUTPUT_SCHEMA = {
     "type": "object",
@@ -65,16 +80,50 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model",
-        default=os.environ.get("CODEX_MODEL"),
-        help="Codex model override (or set CODEX_MODEL)",
+        default=os.environ.get("CODEX_MODEL", "gpt-5.6-sol"),
+        help="Codex model (default: gpt-5.6-sol; or set CODEX_MODEL)",
     )
     return parser.parse_args()
 
 
-def prompt_for(publication_date: dt.date) -> str:
-    return f"""Write an original short story for {publication_date.isoformat()}.
+def select_seed_words(dictionary_path: Path = DICTIONARY_PATH, count: int = 3) -> list[str]:
+    """Select distinct seed words using fresh randomness from the operating system."""
+    try:
+        words = [
+            line.strip().lower()
+            for line in dictionary_path.read_text(encoding="utf-8").splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        ]
+    except OSError as error:
+        raise RuntimeError(f"could not read seed dictionary: {dictionary_path}") from error
+
+    unique_words = list(dict.fromkeys(words))
+    disallowed = sorted(set(unique_words) & DISALLOWED_SEED_WORDS)
+    if disallowed:
+        raise RuntimeError(
+            "seed dictionary contains disallowed words: " + ", ".join(disallowed)
+        )
+    if len(unique_words) < MIN_DICTIONARY_WORDS:
+        raise RuntimeError(
+            f"seed dictionary needs at least {MIN_DICTIONARY_WORDS} distinct words; "
+            f"found {len(unique_words)}"
+        )
+    if len(unique_words) < count:
+        raise RuntimeError(
+            f"seed dictionary needs at least {count} distinct words; found {len(unique_words)}"
+        )
+    return secrets.SystemRandom().sample(unique_words, count)
+
+
+def story_prompt(seed_words: list[str]) -> str:
+    seeds = ", ".join(seed_words)
+    return f"""Write an original short story.
 
 Requirements:
+- Use these three randomly selected seed words as central creative constraints:
+  {seeds}
+- Let the seeds determine the story's objects, actions, setting, or conflict. Do
+  not merely mention them in passing.
 - The English story must be fictional literary prose in a surrealist style.
 - The English story body must contain between {MIN_WORDS} and {MAX_WORDS} words.
 - Give it a short, evocative English title.
@@ -82,13 +131,19 @@ Requirements:
   translated title. Preserve the imagery, tone, paragraph breaks, and ambiguity.
 - Make this story self-contained. Do not mention these instructions, its word
   count, AI, Codex, or the translation process.
+- Avoid overused gothic or cosmic motifs, especially the moon, funerals, death,
+  graves, cemeteries, ghosts, and mourning.
+- Keep the story suitable for a general audience. Do not introduce sexual
+  content, gender or racial stereotypes, discrimination, slurs, or hate themes.
 - Avoid Markdown headings and code fences inside all four string values.
 - Return only the object required by the supplied output schema.
 """
 
 
-def generate_story(publication_date: dt.date, model: str | None) -> dict[str, str]:
+def generate_story(model: str) -> dict[str, str]:
     ENGLISH_DIR.mkdir(parents=True, exist_ok=True)
+    seed_words = select_seed_words()
+    print(f"Story seeds: {', '.join(seed_words)}")
     with tempfile.TemporaryDirectory(prefix="daily-story-", dir=ENGLISH_DIR) as temp:
         temp_dir = Path(temp)
         schema_path = temp_dir / "schema.json"
@@ -118,7 +173,7 @@ def generate_story(publication_date: dt.date, model: str | None) -> dict[str, st
             result = subprocess.run(
                 command,
                 cwd=ROOT,
-                input=prompt_for(publication_date),
+                input=story_prompt(seed_words),
                 text=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -297,7 +352,7 @@ def main() -> int:
             f"only one language exists for {date}; use --force to replace the pair"
         )
     else:
-        story = generate_story(args.date, args.model)
+        story = generate_story(args.model)
         atomic_write(
             english_path, f"{story['english_title']}\n\n{story['english_story']}\n"
         )
