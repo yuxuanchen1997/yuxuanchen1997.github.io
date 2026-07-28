@@ -1,11 +1,11 @@
-title: Daily Stories
-subtitle: Daily surrealist fiction in English
-description: Daily surrealist short stories in English
+title: 每日故事
+subtitle: 每日超现实主义中文小说
+description: 每日中文短篇小说
 author: Yuxuan Chen
-language: en
+language: zh-CN
 timezone: America/Los_Angeles
 url: https://yuxuan.ch
-root: /stories/
+root: /stories_ch/
 permalink: :year/:month/:day/:title/
 source_dir: source
 public_dir: public

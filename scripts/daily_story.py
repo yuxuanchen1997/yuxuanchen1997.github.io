@@ -1,27 +1,32 @@
 #!/usr/bin/env python3
 """Generate and publish one bilingual surrealist story using the Codex CLI.
 
-Designed for an unattended daily cron job. Output is written to the Hexo source
-tree as ``stories/source/texts/YYYY-MM-DD-{en,zh}.txt`` and ``index.md``.
+Designed for an unattended daily cron job. It generates both languages, builds
+both Hexo sites, commits their content, and pushes the current Git branch.
 """
 
 from __future__ import annotations
 
 import argparse
 import datetime as dt
+import fcntl
 import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 
 
-HEXO_DIR = Path(__file__).resolve().parent.parent
-ROOT = HEXO_DIR.parent
-STORIES_DIR = HEXO_DIR / "source" / "texts"
-INDEX_SOURCE = HEXO_DIR / "source" / "index.md"
+ROOT = Path(__file__).resolve().parent.parent
+HEXO_DIR = ROOT / "stories"
+ENGLISH_DIR = HEXO_DIR / "source" / "texts"
+CHINESE_HEXO_DIR = ROOT / "stories_ch"
+CHINESE_DIR = CHINESE_HEXO_DIR / "source" / "texts"
+ENGLISH_INDEX = HEXO_DIR / "source" / "index.md"
+CHINESE_INDEX = CHINESE_HEXO_DIR / "source" / "index.md"
 ENGLISH_FILE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-en\.txt$")
 WORD_RE = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 MIN_WORDS = 300
@@ -83,8 +88,8 @@ Requirements:
 
 
 def generate_story(publication_date: dt.date, model: str | None) -> dict[str, str]:
-    STORIES_DIR.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix="daily-story-", dir=STORIES_DIR) as temp:
+    ENGLISH_DIR.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="daily-story-", dir=ENGLISH_DIR) as temp:
         temp_dir = Path(temp)
         schema_path = temp_dir / "schema.json"
         response_path = temp_dir / "response.json"
@@ -160,47 +165,130 @@ def atomic_write(path: Path, content: str) -> None:
         raise
 
 
+def run_checked(command: list[str], cwd: Path) -> None:
+    result = subprocess.run(
+        command,
+        cwd=cwd,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        check=False,
+    )
+    if result.stdout:
+        print(result.stdout, end="" if result.stdout.endswith("\n") else "\n")
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"{' '.join(command)} failed with exit code {result.returncode}"
+        )
+
+
+def build_site(site_dir: Path) -> None:
+    if site_dir == CHINESE_HEXO_DIR:
+        shutil.copytree(
+            HEXO_DIR / "themes" / "stories",
+            CHINESE_HEXO_DIR / "themes" / "stories",
+            dirs_exist_ok=True,
+        )
+    run_checked(["npm", "run", "build"], site_dir)
+    public_dir = site_dir / "public"
+    if not (public_dir / "index.html").is_file():
+        raise RuntimeError(f"Hexo did not create {public_dir / 'index.html'}")
+    shutil.copytree(public_dir, site_dir, dirs_exist_ok=True)
+
+
+def commit_and_push(publication_date: str) -> None:
+    paths = [
+        "stories/source/index.md",
+        "stories/source/texts",
+        "stories/index.html",
+        "stories/texts",
+        "stories_ch/source/index.md",
+        "stories_ch/source/texts",
+        "stories_ch/index.html",
+        "stories_ch/texts",
+    ]
+    run_checked(["git", "add", "--", *paths], ROOT)
+    staged = subprocess.run(
+        ["git", "diff", "--cached", "--quiet"], cwd=ROOT, check=False
+    )
+    if staged.returncode == 0:
+        print("Nothing changed; skipping commit and push.")
+        return
+    if staged.returncode != 1:
+        raise RuntimeError("could not inspect staged Git changes")
+    run_checked(
+        ["git", "commit", "-m", f"Publish daily story {publication_date}"], ROOT
+    )
+    run_checked(["git", "push", "origin", "HEAD"], ROOT)
+
+
 def read_title(path: Path) -> str:
     with path.open(encoding="utf-8") as story_file:
         return story_file.readline().strip() or path.stem
 
 
-def build_index() -> str:
+def story_entries() -> list[tuple[str, str, str]]:
     entries: list[tuple[str, str, str]] = []
-    for english_path in STORIES_DIR.glob("*-en.txt"):
+    for english_path in ENGLISH_DIR.glob("*-en.txt"):
         match = ENGLISH_FILE_RE.fullmatch(english_path.name)
         if not match:
             continue
         date = match.group(1)
-        chinese_path = STORIES_DIR / f"{date}-zh.txt"
+        chinese_path = CHINESE_DIR / f"{date}-zh.txt"
         if chinese_path.is_file():
             entries.append((date, read_title(english_path), read_title(chinese_path)))
     entries.sort(reverse=True)
+    return entries
 
-    rows = "\n".join(
-        f"- {date} — [{english_title}](texts/{date}-en.txt) · "
-        f"[{chinese_title}](texts/{date}-zh.txt)"
-        for date, english_title, chinese_title in entries
-    )
+
+def build_index(language: str) -> str:
+    entries = story_entries()
+    if language == "en":
+        title = "Daily Stories"
+        rows = "\n".join(
+            f"- {date} — [{english_title}](texts/{date}-en.txt)"
+            for date, english_title, _ in entries
+        )
+        empty = "No stories have been published yet."
+    else:
+        title = "每日故事"
+        rows = "\n".join(
+            f"- {date} — [{chinese_title}](texts/{date}-zh.txt)"
+            for date, _, chinese_title in entries
+        )
+        empty = "暂无故事"
     if not rows:
-        rows = "No stories have been published yet."
+        rows = empty
 
     return f"""---
-title: Daily Stories
+title: {title}
 layout: page
 ---
-
-Surrealist fiction in English and Simplified Chinese.
 
 {rows}
 """
 
 
 def main() -> int:
+    cron_paths = [
+        str(Path.home() / ".local" / "bin"),
+        "/usr/local/bin",
+        "/usr/bin",
+        "/bin",
+    ]
+    os.environ["PATH"] = os.pathsep.join(cron_paths + [os.environ.get("PATH", "")])
+
+    lock_file = (Path(tempfile.gettempdir()) / "yuxuan-daily-story.lock").open("w")
+    try:
+        fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        print("Another daily story process is already running; exiting.")
+        return 0
+
     args = parse_args()
     date = args.date.isoformat()
-    english_path = STORIES_DIR / f"{date}-en.txt"
-    chinese_path = STORIES_DIR / f"{date}-zh.txt"
+    english_path = ENGLISH_DIR / f"{date}-en.txt"
+    chinese_path = CHINESE_DIR / f"{date}-zh.txt"
 
     if not args.force and (english_path.exists() or chinese_path.exists()):
         print(f"A story for {date} already exists; use --force to replace it.", file=sys.stderr)
@@ -213,7 +301,11 @@ def main() -> int:
     atomic_write(
         chinese_path, f"{story['chinese_title']}\n\n{story['chinese_story']}\n"
     )
-    atomic_write(INDEX_SOURCE, build_index())
+    atomic_write(ENGLISH_INDEX, build_index("en"))
+    atomic_write(CHINESE_INDEX, build_index("zh"))
+    build_site(HEXO_DIR)
+    build_site(CHINESE_HEXO_DIR)
+    commit_and_push(date)
     print(f"Published {english_path.relative_to(ROOT)} and {chinese_path.relative_to(ROOT)}")
     return 0
 
