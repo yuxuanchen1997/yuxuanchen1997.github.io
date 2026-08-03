@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-03 — [The River in the Cupboard](2026/08/03/)
 - 2026-08-02 — [The Weather Below](2026/08/02/)
 - 2026-08-01 — [The Local Weather](2026/08/01/)
 - 2026-07-31 — [The Orchard of Surfaces](2026/07/31/)
