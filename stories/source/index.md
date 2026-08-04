@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-04 — [The Pineapple Tide](2026/08/04/)
 - 2026-08-03 — [The River in the Cupboard](2026/08/03/)
 - 2026-08-02 — [The Weather Below](2026/08/02/)
 - 2026-08-01 — [The Local Weather](2026/08/01/)
