@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-06 — [The Knot Orchard](2026/08/06/)
 - 2026-08-05 — [The Road That Learned to Float](2026/08/05/)
 - 2026-08-04 — [The Pineapple Tide](2026/08/04/)
 - 2026-08-03 — [The River in the Cupboard](2026/08/03/)
