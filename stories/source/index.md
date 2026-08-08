@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-08 — [The Pale Correspondence](2026/08/08/)
 - 2026-08-07 — [The Spine of the Marsh](2026/08/07/)
 - 2026-08-06 — [The Knot Orchard](2026/08/06/)
 - 2026-08-05 — [The Road That Learned to Float](2026/08/05/)
