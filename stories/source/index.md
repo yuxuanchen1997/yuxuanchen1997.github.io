@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-10 — [The Shape Beyond the Gate](2026/08/10/)
 - 2026-08-09 — [The Color Between Stations](2026/08/09/)
 - 2026-08-08 — [The Pale Correspondence](2026/08/08/)
 - 2026-08-07 — [The Spine of the Marsh](2026/08/07/)
