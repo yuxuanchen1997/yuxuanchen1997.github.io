@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-12 — [The Green Rehearsal](2026/08/12/)
 - 2026-08-11 — [The Balcony That Bloomed](2026/08/11/)
 - 2026-08-10 — [The Shape Beyond the Gate](2026/08/10/)
 - 2026-08-09 — [The Color Between Stations](2026/08/09/)
