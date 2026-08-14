@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-14 — [The Sweet Geography](2026/08/14/)
 - 2026-08-13 — [Lessons in Green](2026/08/13/)
 - 2026-08-12 — [The Green Rehearsal](2026/08/12/)
 - 2026-08-11 — [The Balcony That Bloomed](2026/08/11/)
