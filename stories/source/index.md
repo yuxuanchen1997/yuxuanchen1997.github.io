@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-15 — [The Tailor of Tuesday](2026/08/15/)
 - 2026-08-14 — [The Sweet Geography](2026/08/14/)
 - 2026-08-13 — [Lessons in Green](2026/08/13/)
 - 2026-08-12 — [The Green Rehearsal](2026/08/12/)
