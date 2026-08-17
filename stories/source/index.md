@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-17 — [The Cup That Remembered Blue](2026/08/17/)
 - 2026-08-16 — [The Table That Remembered Water](2026/08/16/)
 - 2026-08-15 — [The Tailor of Tuesday](2026/08/15/)
 - 2026-08-14 — [The Sweet Geography](2026/08/14/)
