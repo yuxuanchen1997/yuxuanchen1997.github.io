@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-21 — [The Checkout of Afternoons](2026/08/21/)
 - 2026-08-20 — [The Rooms Above the Terrace](2026/08/20/)
 - 2026-08-19 — [The Fence That Learned Surprise](2026/08/19/)
 - 2026-08-18 — [The Stripe That Arrived](2026/08/18/)
