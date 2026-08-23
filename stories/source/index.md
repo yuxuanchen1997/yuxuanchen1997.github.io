@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-23 — [The Teal Orchard](2026/08/23/)
 - 2026-08-22 — [The Measure of Rain](2026/08/22/)
 - 2026-08-21 — [The Checkout of Afternoons](2026/08/21/)
 - 2026-08-20 — [The Rooms Above the Terrace](2026/08/20/)
