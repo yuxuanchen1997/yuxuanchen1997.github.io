@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-24 — [The Weather Clerk](2026/08/24/)
 - 2026-08-23 — [The Teal Orchard](2026/08/23/)
 - 2026-08-22 — [The Measure of Rain](2026/08/22/)
 - 2026-08-21 — [The Checkout of Afternoons](2026/08/21/)
