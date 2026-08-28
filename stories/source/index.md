@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-28 — [The Route That Drank the Rain](2026/08/28/)
 - 2026-08-27 — [The Brightest Error](2026/08/27/)
 - 2026-08-26 — [The Weather in the Barrel](2026/08/26/)
 - 2026-08-25 — [The Warmth Clerk](2026/08/25/)
