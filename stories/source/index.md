@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-08-30 — [The Daylight Keeper](2026/08/30/)
 - 2026-08-29 — [The Gray Republic](2026/08/29/)
 - 2026-08-28 — [The Route That Drank the Rain](2026/08/28/)
 - 2026-08-27 — [The Brightest Error](2026/08/27/)
