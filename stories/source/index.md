@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-02 — [The Department of Lost Ash](2026/09/02/)
 - 2026-09-01 — [The Menu of Unlived Days](2026/09/01/)
 - 2026-08-31 — [The Kitchen at Fourteen O’Clock](2026/08/31/)
 - 2026-08-30 — [The Daylight Keeper](2026/08/30/)
