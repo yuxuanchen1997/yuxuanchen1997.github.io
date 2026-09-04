@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-04 — [The Weather in the Teacup](2026/09/04/)
 - 2026-09-03 — [The Door That Learned Spring](2026/09/03/)
 - 2026-09-02 — [The Department of Lost Ash](2026/09/02/)
 - 2026-09-01 — [The Menu of Unlived Days](2026/09/01/)
