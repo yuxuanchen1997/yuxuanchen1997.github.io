@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-08 — [The Waterfall Tailor](2026/09/08/)
 - 2026-09-07 — [The Café That Misplaced Tuesday](2026/09/07/)
 - 2026-09-06 — [The Library of Loose Threads](2026/09/06/)
 - 2026-09-05 — [The Roof That Learned to Run](2026/09/05/)
