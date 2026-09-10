@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-10 — [The Weather Waiter](2026/09/10/)
 - 2026-09-09 — [The Kindness Orchard](2026/09/09/)
 - 2026-09-08 — [The Waterfall Tailor](2026/09/08/)
 - 2026-09-07 — [The Café That Misplaced Tuesday](2026/09/07/)
