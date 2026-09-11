@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-11 — [The Country Beneath the Cloth](2026/09/11/)
 - 2026-09-10 — [The Weather Waiter](2026/09/10/)
 - 2026-09-09 — [The Kindness Orchard](2026/09/09/)
 - 2026-09-08 — [The Waterfall Tailor](2026/09/08/)
