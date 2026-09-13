@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-13 — [The Hearth That Ate Maps](2026/09/13/)
 - 2026-09-12 — [The Orchard of Unfinished Songs](2026/09/12/)
 - 2026-09-11 — [The Country Beneath the Cloth](2026/09/11/)
 - 2026-09-10 — [The Weather Waiter](2026/09/10/)
