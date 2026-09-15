@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-15 — [The Woven Leaf](2026/09/15/)
 - 2026-09-14 — [The Dock That Checked the Sea](2026/09/14/)
 - 2026-09-13 — [The Hearth That Ate Maps](2026/09/13/)
 - 2026-09-12 — [The Orchard of Unfinished Songs](2026/09/12/)
