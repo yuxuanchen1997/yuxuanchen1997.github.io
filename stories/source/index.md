@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-21 — [The Rain Clerk](2026/09/21/)
 - 2026-09-20 — [The Key in the Batter](2026/09/20/)
 - 2026-09-19 — [The Unnamed Tile](2026/09/19/)
 - 2026-09-18 — [The Forest Takes Attendance](2026/09/18/)
