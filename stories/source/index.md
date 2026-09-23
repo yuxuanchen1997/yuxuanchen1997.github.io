@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-23 — [The Market of Borrowed Light](2026/09/23/)
 - 2026-09-22 — [The Weight of Breakfast](2026/09/22/)
 - 2026-09-21 — [The Rain Clerk](2026/09/21/)
 - 2026-09-20 — [The Key in the Batter](2026/09/20/)
