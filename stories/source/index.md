@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-27 — [Under the Script](2026/09/27/)
 - 2026-09-26 — [The Road That Folded](2026/09/26/)
 - 2026-09-25 — [The Last Crease](2026/09/25/)
 - 2026-09-24 — [The Far Side of Tuesday](2026/09/24/)
