@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-09-28 — [The Town That Washed Away](2026/09/28/)
 - 2026-09-27 — [Under the Script](2026/09/27/)
 - 2026-09-26 — [The Road That Folded](2026/09/26/)
 - 2026-09-25 — [The Last Crease](2026/09/25/)
