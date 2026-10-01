@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-01 — [The Hard Orchard](2026/10/01/)
 - 2026-09-30 — [The Weather Foundry](2026/09/30/)
 - 2026-09-29 — [The Seamstress of Noon](2026/09/29/)
 - 2026-09-28 — [The Town That Washed Away](2026/09/28/)
