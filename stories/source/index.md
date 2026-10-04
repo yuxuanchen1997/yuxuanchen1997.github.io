@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-04 — [The Flavor of Applause](2026/10/04/)
 - 2026-10-03 — [The Yard Remembered Yellow](2026/10/03/)
 - 2026-10-02 — [The Cloth of Small Weather](2026/10/02/)
 - 2026-10-01 — [The Hard Orchard](2026/10/01/)
