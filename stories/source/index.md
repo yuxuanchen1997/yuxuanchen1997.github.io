@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-07 — [Weather Behind the Curtain](2026/10/07/)
 - 2026-10-06 — [What Is Trying to Open](2026/10/06/)
 - 2026-10-05 — [The Valley’s Cool Side](2026/10/05/)
 - 2026-10-04 — [The Flavor of Applause](2026/10/04/)
