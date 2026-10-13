@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-13 — [The House’s Green Lung](2026/10/13/)
 - 2026-10-11 — [The Inland Light](2026/10/11/)
 - 2026-10-10 — [Unpriced Morning](2026/10/10/)
 - 2026-10-09 — [The Crimson Edition](2026/10/09/)
