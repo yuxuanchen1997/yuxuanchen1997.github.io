@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-16 — [The Clear Catch](2026/10/16/)
 - 2026-10-15 — [The Road Under the Kitchen](2026/10/15/)
 - 2026-10-14 — [Green Instructions](2026/10/14/)
 - 2026-10-13 — [The House’s Green Lung](2026/10/13/)
