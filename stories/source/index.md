@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-20 — [The Grain of Noon](2026/10/20/)
 - 2026-10-18 — [The Green Adjustment](2026/10/18/)
 - 2026-10-17 — [The Present Grove](2026/10/17/)
 - 2026-10-16 — [The Clear Catch](2026/10/16/)
