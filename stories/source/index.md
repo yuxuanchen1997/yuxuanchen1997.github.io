@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-24 — [The Pouch of Morning](2026/10/24/)
 - 2026-10-23 — [The Edible Week](2026/10/23/)
 - 2026-10-22 — [The Currency of Flavor](2026/10/22/)
 - 2026-10-21 — [The Unfinished Weather](2026/10/21/)
