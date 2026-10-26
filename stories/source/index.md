@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-26 — [The Avenue That Turned Aside](2026/10/26/)
 - 2026-10-25 — [The Half-Turn](2026/10/25/)
 - 2026-10-24 — [The Pouch of Morning](2026/10/24/)
 - 2026-10-23 — [The Edible Week](2026/10/23/)
