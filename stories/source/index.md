@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-28 — [The Horizon’s Peg](2026/10/28/)
 - 2026-10-27 — [The Useful Crumb](2026/10/27/)
 - 2026-10-26 — [The Avenue That Turned Aside](2026/10/26/)
 - 2026-10-25 — [The Half-Turn](2026/10/25/)
