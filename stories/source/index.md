@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-10-31 — [The Porcelain Yesterday](2026/10/31/)
 - 2026-10-30 — [The Tide’s Bakery](2026/10/30/)
 - 2026-10-29 — [The Footpath’s Dream](2026/10/29/)
 - 2026-10-28 — [The Horizon’s Peg](2026/10/28/)
