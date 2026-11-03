@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-03 — [Opinionated Water](2026/11/03/)
 - 2026-11-02 — [The Color Between Names](2026/11/02/)
 - 2026-11-01 — [The Lettuce Ferryman](2026/11/01/)
 - 2026-10-31 — [The Porcelain Yesterday](2026/10/31/)
