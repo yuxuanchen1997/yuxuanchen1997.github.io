@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-06 — [Layered Morning](2026/11/06/)
 - 2026-11-05 — [The Puddle Market](2026/11/05/)
 - 2026-11-04 — [The Patient Hill](2026/11/04/)
 - 2026-11-03 — [Opinionated Water](2026/11/03/)
