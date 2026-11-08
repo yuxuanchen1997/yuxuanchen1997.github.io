@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-08 — [The Shrub’s Errand](2026/11/08/)
 - 2026-11-07 — [The Elsewhere Department](2026/11/07/)
 - 2026-11-06 — [Layered Morning](2026/11/06/)
 - 2026-11-05 — [The Puddle Market](2026/11/05/)
