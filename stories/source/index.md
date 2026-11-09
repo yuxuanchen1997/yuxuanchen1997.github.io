@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-09 — [The Coast in Graphite](2026/11/09/)
 - 2026-11-08 — [The Shrub’s Errand](2026/11/08/)
 - 2026-11-07 — [The Elsewhere Department](2026/11/07/)
 - 2026-11-06 — [Layered Morning](2026/11/06/)
