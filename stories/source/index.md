@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-11 — [The Thirst Field](2026/11/11/)
 - 2026-11-10 — [The Edible Index](2026/11/10/)
 - 2026-11-09 — [The Coast in Graphite](2026/11/09/)
 - 2026-11-08 — [The Shrub’s Errand](2026/11/08/)
