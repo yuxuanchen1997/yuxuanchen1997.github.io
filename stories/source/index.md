@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-12 — [The Road in the Tin](2026/11/12/)
 - 2026-11-11 — [The Thirst Field](2026/11/11/)
 - 2026-11-10 — [The Edible Index](2026/11/10/)
 - 2026-11-09 — [The Coast in Graphite](2026/11/09/)
