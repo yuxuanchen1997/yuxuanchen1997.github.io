@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-18 — [The Weather Below](2026/11/18/)
 - 2026-11-17 — [The Folded Garden](2026/11/17/)
 - 2026-11-16 — [Cut Along the Bark](2026/11/16/)
 - 2026-11-15 — [The Birch Seam](2026/11/15/)
