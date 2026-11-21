@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-21 — [The Island in the Safe](2026/11/21/)
 - 2026-11-20 — [The Chocolate Compass](2026/11/20/)
 - 2026-11-19 — [The Smallest Hour](2026/11/19/)
 - 2026-11-18 — [The Weather Below](2026/11/18/)
