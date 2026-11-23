@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-23 — [The Question-Key](2026/11/23/)
 - 2026-11-22 — [The Briar Flight](2026/11/22/)
 - 2026-11-21 — [The Island in the Safe](2026/11/21/)
 - 2026-11-20 — [The Chocolate Compass](2026/11/20/)
