@@ -3,6 +3,7 @@ title: Daily Stories
 layout: page
 ---
 
+- 2026-11-25 — [The Station That Leaked](2026/11/25/)
 - 2026-11-24 — [The Weather Seller](2026/11/24/)
 - 2026-11-23 — [The Question-Key](2026/11/23/)
 - 2026-11-22 — [The Briar Flight](2026/11/22/)
